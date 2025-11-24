@@ -1,0 +1,3 @@
+com\awa\dao\PersonDAO.class
+com\awa\entities\Person.class
+com\awa\person\PersonListBB.class
