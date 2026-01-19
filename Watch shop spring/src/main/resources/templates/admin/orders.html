@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav th:replace="~{admin/dashboard :: #sidebarMenu}"></nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Orders Management</h1>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="order : ${orders}">
+                                <td th:text="${order.id}">1</td>
+                                <td th:text="${order.user.username}">user</td>
+                                <td th:text="${#temporals.format(order.createdAt, 'yyyy-MM-dd HH:mm')}">Date</td>
+                                <td th:text="${order.totalPrice}">0.00</td>
+                                <td th:text="${order.status}">NEW</td>
+                                <td>
+                                    <form th:action="@{/admin/orders/status/{id}(id=${order.id})}" method="post"
+                                        class="d-flex gap-2">
+                                        <select name="status" class="form-select form-select-sm" style="width: auto;">
+                                            <option value="NEW" th:selected="${order.status.name() == 'NEW'}">NEW
+                                            </option>
+                                            <option value="PROCESSING"
+                                                th:selected="${order.status.name() == 'PROCESSING'}">PROCESSING</option>
+                                            <option value="SHIPPED" th:selected="${order.status.name() == 'SHIPPED'}">
+                                                SHIPPED</option>
+                                            <option value="DELIVERED"
+                                                th:selected="${order.status.name() == 'DELIVERED'}">DELIVERED</option>
+                                            <option value="CANCELLED"
+                                                th:selected="${order.status.name() == 'CANCELLED'}">CANCELLED</option>
+                                        </select>
+                                        <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div th:replace="~{layout :: footer}"></div>
+</body>
+
+</html>

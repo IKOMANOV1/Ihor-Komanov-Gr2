@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav th:replace="~{admin/dashboard :: #sidebarMenu}"></nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2" th:text="${watch.id == null ? 'Add New Watch' : 'Edit Watch'}">Watch Form</h1>
+                </div>
+
+                <form th:action="@{/admin/watches/save}" th:object="${watch}" method="post" style="max-width: 600px;">
+                    <input type="hidden" th:field="*{id}">
+
+                    <div class="mb-3">
+                        <label for="nazwa" class="form-label">Name (Nazwa)</label>
+                        <input type="text" class="form-control" id="nazwa" th:field="*{nazwa}" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('nazwa')}" th:errors="*{nazwa}">Error</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="brand" class="form-label">Brand</label>
+                        <input type="text" class="form-control" id="brand" th:field="*{brand}" required>
+                        <div class="text-danger" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}">Error</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" id="description" th:field="*{description}" rows="3"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" step="0.01" class="form-control" id="price" th:field="*{price}" required
+                            min="0">
+                        <div class="text-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Error</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="inStock" class="form-label">Stock</label>
+                        <input type="number" class="form-control" id="inStock" th:field="*{inStock}" required min="0">
+                        <div class="text-danger" th:if="${#fields.hasErrors('inStock')}" th:errors="*{inStock}">Error
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="imageUrl" class="form-label">Image URL</label>
+                        <input type="text" class="form-control" id="imageUrl" th:field="*{imageUrl}">
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="isActive" th:field="*{isActive}">
+                        <label class="form-check-label" for="isActive">Active</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <a href="/admin/watches" class="btn btn-secondary">Cancel</a>
+                </form>
+            </main>
+        </div>
+    </div>
+
+    <div th:replace="~{layout :: footer}"></div>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <main class="container">
+        <div class="px-4 py-5 my-5 text-center">
+            <h1 class="display-5 fw-bold">Welcome to Watch Store</h1>
+            <div class="col-lg-6 mx-auto">
+                <p class="lead mb-4">Find your perfect timekeeper from our exclusive collection.</p>
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="/catalog" class="btn btn-primary btn-lg px-4 gap-3">Browse Catalog</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-3 text-center">
+            <div class="col-md-4 themed-grid-col" th:each="watch : ${recentWatches}">
+                <div class="card mb-4 box-shadow">
+                    <img class="card-img-top"
+                        th:src="${watch.imageUrl != null ? watch.imageUrl : 'https://via.placeholder.com/200'}"
+                        alt="Watch image">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${watch.nazwa}">Watch Name</h5>
+                        <p class="card-text" th:text="${watch.brand}">Brand</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a th:href="@{/watch/{id}(id=${watch.id})}"
+                                    class="btn btn-sm btn-outline-secondary">View</a>
+                            </div>
+                            <small class="text-muted" th:text="${watch.price} + ' PLN'">99.99 PLN</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div th:replace="~{layout :: footer}"></div>
+
+</body>
+
+</html>

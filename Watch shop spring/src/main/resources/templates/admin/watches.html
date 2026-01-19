@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav th:replace="~{admin/dashboard :: #sidebarMenu}"></nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Watches Management</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="/admin/watches/add" class="btn btn-sm btn-outline-primary">Add New Watch</a>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Brand</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Stock</th>
+                                <th scope="col">Active</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="watch : ${watches}">
+                                <td th:text="${watch.id}">1,001</td>
+                                <td th:text="${watch.nazwa}">Name</td>
+                                <td th:text="${watch.brand}">Brand</td>
+                                <td th:text="${watch.price}">Price</td>
+                                <td th:text="${watch.inStock}">0</td>
+                                <td th:text="${watch.isActive ? 'Yes' : 'No'}">Yes</td>
+                                <td>
+                                    <a th:href="@{/admin/watches/edit/{id}(id=${watch.id})}"
+                                        class="btn btn-sm btn-outline-secondary">Edit</a>
+
+                                    <!-- Use a form for delete to support POST (better practice than GET for actions) -->
+                                    <form th:action="@{/admin/watches/delete/{id}(id=${watch.id})}" method="post"
+                                        class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div th:replace="~{layout :: footer}"></div>
+</body>
+
+</html>

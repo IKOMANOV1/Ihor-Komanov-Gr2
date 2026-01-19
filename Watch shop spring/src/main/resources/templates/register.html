@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout :: head}"></head>
+
+<body class="text-center">
+
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <main class="form-signin w-100 m-auto" style="max-width: 330px; padding: 15px;">
+        <form th:action="@{/register}" th:object="${user}" method="post">
+            <h1 class="h3 mb-3 fw-normal">Register</h1>
+
+            <div th:if="${error}" class="alert alert-danger" th:text="${error}">Error</div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="username" th:field="*{username}" placeholder="Username"
+                    required>
+                <label for="username">Username</label>
+                <div class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Error</div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="name@example.com"
+                    required>
+                <label for="email">Email address</label>
+                <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Password"
+                    required>
+                <label for="password">Password (min 6 chars)</label>
+                <div class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="passwordConfirm" th:field="*{passwordConfirm}"
+                    placeholder="Confirm Password" required>
+                <label for="passwordConfirm">Confirm Password</label>
+            </div>
+
+            <button class="w-100 btn btn-lg btn-success" type="submit">Register</button>
+            <p class="mt-3 mb-3 text-muted">Already have an account? <a href="/login">Login</a></p>
+        </form>
+    </main>
+
+    <div th:replace="~{layout :: footer}"></div>
+</body>
+
+</html>

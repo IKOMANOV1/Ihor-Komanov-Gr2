@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head th:replace="~{layout :: head}"></head>
+
+<body>
+
+    <nav th:replace="~{layout :: navbar}"></nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/admin">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('MODERATOR')">
+                            <a class="nav-link" href="/admin/orders">
+                                Orders
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('MODERATOR')">
+                            <a class="nav-link" href="/admin/watches">
+                                Watches
+                            </a>
+                        </li>
+                        <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+                            <a class="nav-link" href="/admin/users">
+                                Users
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <div
+                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Admin Dashboard</h1>
+                </div>
+
+                <p>Welcome to the admin panel. Select a category from the sidebar.</p>
+                <p sec:authorize="hasRole('ADMIN')">You are an <b>Administrator</b>. You can manage Users.</p>
+                <p sec:authorize="hasRole('MODERATOR')">You are a <b>Moderator</b>. You can manage Watches and Orders.
+                </p>
+            </main>
+        </div>
+    </div>
+
+    <div th:replace="~{layout :: footer}"></div>
+</body>
+
+</html>
