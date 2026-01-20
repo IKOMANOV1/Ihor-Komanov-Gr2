@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="primefaces">
+    <ui:composition template="/templates/page-template.xhtml">
+        <ui:define name="pageContent">
+            <p:panel header="Kalkulator">
+                <p:messages id="msg" />
+                <h:form >
+                    <h:panelGrid columns="2" cellpadding="5" styleClass="bottom-space">
+                        
+                        <p:outputLabel for="input1" value="Kwota: "/>
+                        <p:inputNumber id="input1" value="#{calcBB.kwota}" minValue="1" decimalPlaces="0" />                      
+                        <p:outputLabel for="okres" value="Okres: "/>
+                        <p:inputNumber id="okres" value="#{calcBB.okres}" minValue="1" decimalPlaces="0" />
+                        <p:outputLabel for="procent" value="Opracentowanie: "/>
+                        <p:inputNumber id="procent" value="#{calcBB.procent}" minValue="1" decimalPlaces="0" />
+                        <p:commandButton value="Wynik" action="#{calcBB.calc()}" update="msg"/>
+                    </h:panelGrid>
+                    <p:commandLink value="Informacje" action="#{calcBB.info()}" />
+                </h:form>
+            </p:panel>
+        </ui:define>
+
+    </ui:composition>
+</html>
